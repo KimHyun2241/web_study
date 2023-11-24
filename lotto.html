@@ -1,0 +1,63 @@
+<!-- Ctrl + alt + h = html 실행기-->
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>로또추첨기</title>
+    <style>   
+        /* .ball 클래스 스타일 지정 */
+        .ball{
+            /* 요소를 인라인 블록으로 표시 */
+            display: inline-block;
+            /* 테두리를 1픽셀 두께의 검은색 실선으로 지정 */
+            border: 1px solid black;
+            /* 테두리의 모서리를 둥글게 만듬 20픽셀 반지름 */
+            border-radius: 20px;
+            /* 너비 지정 */
+            width: 40px;
+            /* 높이 지정 */
+            height: 40px;
+            /* 텍스트의 라인 높이 지정 후 텍스트를 수직으로 중앙 정렬 */
+            line-height: 40px;
+            /* 텍스트의 크기 지정 */
+            font-size: 20px;
+            /* 텍스트를 가운데로 정렬 */
+            text-align: center;
+            /* 오른쪽 마진을 지정 */
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="result">추첨 결과는?</div>
+    <div id="bonus">보너스: </div>
+<script>
+    // 길이 45의 배열에 1~45까지 초기화
+    // fill() = 값을 지정하여 초기화 비워두면 undefined
+    const candidate = Array(45).fill().map((v, i) => i + 1);
+    // 빈 배열 선언
+    const shuffle = [];
+    // while (candidate.length > 0) {
+    //     // 무작위 인덱스 뽑기 1~45 0의 경우는 while문에 충족하지 않기 때문에 0은 나오지 않음
+    //     const randoms = Math.floor(Math.random() * candidate.length)
+    //     // candidate에 한 가지 요소를 랜덤으로 추출하여 spliceArray에 저장
+    //     const spliceArray = candidate.splice(randoms, 1);
+    //     // 배열에 들어간 값을 꺼내서
+    //     const value = spliceArray[0];
+    //     // shuffle에 넣기
+    //     shuffle.push(value);
+    // }
+    // 45~1로 거꾸로 for문 동작
+    for (let i = candidate.length; i > 0; i--) {
+        const random = Math.floor(Math.random() * i);
+        const spliceArray = candidate.splice(random, 1);
+        const value = spliceArray[0];
+        shuffle.push(value);
+    }
+    console.log(shuffle);
+    // 0~5번 인덱스 즉 6개를 잘라낸 후 sort 메소드로 오름차순으로 정렬
+    const winBalls = shuffle.slice(0, 6). sort((a, b) => a - b);
+    // 6번 인덱스를 bonus에 전달
+    const bonus = shuffle[6];
+    console.log(winBalls, bonus);
+</script>
+</body>

@@ -1,0 +1,144 @@
+<!--문서 형식 선언-->
+<!DOCTYPE html>
+<html>
+    <!-- 브라우저에게 문서의 정보를 전달-->
+    <head>
+        <!-- 인코딩 방식 설정-->
+        <meta charset="utf-8">
+        <!-- 문서의 제목 선언-->
+        <title>끝말잇기</title>
+    </head>
+
+    <!-- 화면에 표시될 콘텐츠-->
+    <body>
+        <!-- div는 블록 레벨의 컨테이너 요소를 만드는 태그-->
+        <!-- span는 인라인 컨테이너-->
+        <div><span id="order">1</span>번째 참가자</div>
+        <div>제시어: <span id="word"></span></div>
+        <!-- 입력을 받기 위한 태그-->
+        <input type="text">
+        <!-- 클릭을 입력받음-->
+        <button>입력</button>
+        <button class="hello">버튼2</button>
+        <button class="hello">버튼3</button>
+        <script>
+          
+            // 입력값을 숫자형으로 변환하여 저장
+            const number = Number(prompt('몇 명이 참가하나요?'));
+            // HTML 태그를 선택
+            const $button = document.querySelector('button');
+            const $input = document.querySelector('input');
+            const $word = document.querySelector('#word');
+            const $order = document.querySelector('#order');
+            // 제시어
+            let word;
+            // 현재 단어
+            let newWord;
+            
+            // 이벤트 리스너 코드
+            const onClickButton = () => {
+                // 제시어 비어 있는거나 입력 단어가 올바른지 확인
+                // 앞서 제시한 단어의 마지막과 새로 입력한 단어 맨 앞이 같은지 비교
+                if (!word || word[word.length - 1] === newWord[0]) {
+                    // 입력한 단어가 제시어가 됨
+                    word = newWord;
+                    // 화면에 제시어 표시
+                    $word.textContent = word;
+                    // 태그 내부의 문자열을 불러와 숫자형으로 저장
+                    const order = Number($order.textContent);
+                    if (order + 1 > number) {
+                        // 태그 내부의 문자열을 1로 지정
+                        $order.textContent = 1;
+                    } else {
+                        // 태그 내부의 문자열을 order + 1로 지정
+                        $order.textContent = order + 1;
+                    }
+                } else {
+                    // 올바르지 않다는 것을 alter 함수로 보여준다.
+                    alert('올바르지 않은 단어입니다!');
+                    // 입력 태그 내부를 빈 문자열로 초기화
+                    // $input은 input 태그를 선택하는 변수
+                    $input.value ='';
+                    // 입력 태그를 내부에 커서를 위치하게 하는 focus 매서드
+                    $input.focus();
+                };
+            };
+            
+            // 이벤트 리스너 코드
+            const onInput = (event) => {
+                // 입력하는 단어를 현재 단어로
+                newWord = event.target.value;
+            };
+            
+            // 'click' 이벤트 연결
+            $button.addEventListener('click', onClickButton);
+            // 'input' 이벤트 연결
+            $input.addEventListener('input', onInput);
+            // 입력 태그를 내부에 커서를 위치하게 하는 focus 매서드
+            $input.focus();
+
+            let cond = true;
+            let value = '';
+            switch (cond){
+                case true:
+                    value='참';
+                case false:
+                    value='거짓';
+            } 
+        </script>
+    </body>
+</html>
+
+            
+<!--
+// // 입력값을 숫자형으로 변환하여 저장
+// const number = Number(prompt("몇 명이 참가하나요?"));
+// console.log(typeof realNumber);
+
+// // HTML 태그를 선택
+// // const $input = document.querySelector('input');
+// // console.log($input);
+
+// // button 태그를 모두 선택
+// // document.querySelector만 사용하면 첫 번째 버튼만(하나만) 사용됨
+// // 그러므로 document.querySelectorAll을 사용해야 한다.
+// // const $$buttons = document.querySelectorAll('button');
+// // console.log($$buttons);
+
+// // 두 가지의 태그를 선택할 때 class를 지정
+// const $buttons = document.querySelectorAll('.hello');
+// console.log($buttons)
+
+// const $span = document.querySelector('div span');
+// console.log($span)
+
+
+// /* 이벤트 리스너 코드
+// const onClickButton = () => {
+//     console.log('버튼 클릭');
+// };
+// // 태그 선택
+// const $button = document.querySelector('button');
+// // 이벤트 연결
+// // onClickButton에 ()를 붙이면 함수가 실행되므로 ()를 사용X
+// $button.addEventListener('click', onClickButton);
+// */
+
+// // 위 이벤트 리스너 코드를 한 번에 코딩
+// // document.querySelector('button').addEventListener('click', () => {
+// //     console.log('버튼 클릭');
+// // });
+
+
+// const onClickButton = () => {
+//     console.log('버튼 클릭');
+// };
+
+// const $button = document.querySelector('button');
+// $button.addEventListener('click', onClickButton);
+// const onInput = (event) => {
+//     console.log('글자 입력', event.target.value);
+// };
+// const $input = document.querySelector('input');
+// $input.addEventListener('input', onInput);
+-->    

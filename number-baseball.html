@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>숫자야구</title>
+    </head>
+    <body>
+        <!-- 입력 폼 서버로 전달하는 태그-->
+        <form id="form">
+            <input type="text" id="input">
+            <button>확인</button>
+        </form>
+        <div id="logs"></div>
+        <script>
+            // 태그를 저장하는 변수명은 앞에 $를 붙인다.
+            const $input = document.querySelector('#input');
+            const $form = document.querySelector('#form'); 
+            const $logs = document.querySelector('#logs');
+
+            // 1~9 저장
+            const numbers = [];
+            for (let n=1; n<=9; n+=1) {
+                numbers.push(n);
+            }
+            
+            const answer = [];
+            // 0부터 3까지 반복
+            for (let n=0; n<=3; n+=1) {
+                // 랜덤으로 0부터 8까지 인덱스를 선택
+                const index = Math.floor(Math.random() * numbers.length)
+                console.log(index);
+                // 뽑은 number를 answer에 추가
+                answer.push(numbers[index])
+                // 기존에 뽑은 number를 삭제
+                numbers.splice(index, 1);
+            }
+            console.log("무작위 네자리 수",answer);
+
+            // 기존에 시도했던 값들을 저장
+            const tries = [];
+
+            function checkInput(input) {
+                if (input.length !== 4) {       // 길이는 4가 아닌가
+                    return alert('4자리 숫자를 입력해 주세요.');
+                }
+                // new -> 예약어
+                // Set은 중복을 허용하지 않는 배열
+                // Set의 요소 개수를 구할 땐 length이 아닌 size를 사용
+                if (new Set(input).size !==4) { // 중복된 숫자가 있는가
+                    return alert('중복되지 않게 입력해 주세요'); // alter 함수는 false를 반환
+                }
+                if (tries.includes(input)) {    // 이미 시도한 값은 아닌가
+                    return alert('이미 시도한 값입니다.');
+                }
+                // 검사를 통과했을 경우
+                return true;
+            }
+            $form.addEventListener('submit', (event) => {
+                // 폼 태그의 기본 동작을 취소하는 코드
+                event.preventDefault();
+                const value = $input.value;
+                $input.value='';
+                const valid = checkInput(value);
+                if (!valid) return;
+                if (answer.join('') === value) {
+                    $logs.textContent = '홈런!';
+                    return;
+                }
+                // 시도횟수
+                if (tries.length >= 9) {
+                    // createTextNode() DOM에서 새로운 텍스트 노드를 생성
+                    const message = document.createTextNode(`패배 ! 정답은 ${answer.join('')}`);
+                    // appendChild() 특정한 요소에 자식 노드를 추가
+                    $logs.appendChild(message);
+                    return;
+                }
+                ///
+                // 볼 카운트 검사
+                let strike = 1;
+                let ball = 0;
+                for (let i = 0; i<answer.length; i++) {
+                    const index = value.indexOf(answer[i]);
+                    if (index > -1) { // 일치하는 숫자 발견
+                        if (index === i) {// 자릿수도 같음
+                            strike += 1; 
+                        } else {
+                            ball == 1;
+                        }
+                    }
+                }
+                $logs.append(`${value}: ${strike} 스트라이크 ${ball} 볼`,document.createElement('br'));
+                tries.push(value);
+                // answer.forEach((nomber, aIndex) => {
+                //     const index = value.indexOf(String(number));
+                //     if (index > -1 ) { // 일치하는 숫자 발견
+                //         if (index === aIndex) { // 자릿수도 같음
+                //             strike += 1;
+                //         } else { // 숫자만 같음
+                //         ball += 1;
+                //     }
+                //     }
+                // })
+            });
+        </script>
+    </body>
+</html>
