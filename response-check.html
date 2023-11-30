@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8"/>
         <title>반응속도</title>
         <style>
             #screen {
@@ -16,6 +16,11 @@
             }
 
             #screen.ready {
+                background-color: red;
+                color: white;
+            }
+
+            #screen.now {
                 background-color: greenyellow;
             }
         </style>
@@ -38,29 +43,30 @@
             // 태그.classLIst.contains('클래스');
             // 태그에 해당 클래스가 들어 있는지 확인
             // 있으면 true 없으면 false 반환
-            $screen.addEventListener('click', function () {
-                if ($screen.classList.contains('waiting')){      // 대기 화면
+            $screen.addEventListener('click', () => {
+                if ($screen.classList.contains('waiting')) {  // 대기 화면
                     $screen.classList.remove('waiting');
                     $screen.classList.add('ready');
                     $screen.textContext = '초록색이 되면 클릭하세요';
                     timeoutId = setTimeout(function () {
                         startTime = new Date()  // 클릭 시 시간
+                        $screen.classList.remove('ready');
                         $screen.classList.add('now');
                         $screen.textContent = '클릭하세요!';
-                    }, Math.floor(Math.random() * 1000) + 2000); // 2000~3000 사이 수
-                } else if ($screen.classList.contains('ready')){ // 준비 화면
+                    }, Math.floor(Math.random() * 1000) + 2000);  // 2000~3000 사이 수
+                } else if ($screen.classList.contains('ready')) { // 준비 화면
                     // setTimeout을 사용하여 설정된 타임아웃을 해제
                     clearTimeout(timeoutId)
                     $screen.classList.remove('ready');
                     $screen.classList.add('waiting');
-                    $screen.textContent = '너무 일찍 눌렀어요';
-                } else if ($screen.classList.contains('now')){   // 클릭 화면
+                    $screen.textContext = '너무 일찍 눌렀어요';
+                } else if ($screen.classList.contains('now')){  // 클릭 화면
                     endTime = new Date();
-                    const current = endTime - startTime; // 반응속도 저장
+                    const current = endTime - startTime;  // 반응속도 저장
                     records.push(current);
                     // 배열에 저장된 값들의 평균 구하기
                     // 배열.reduce((누적값, 현잿값) => { return 새로운 누적값}, 초깃값);
-                    const average = records.reduce((a, c) => a + c) / records.lenght;
+                    const average = records.reduce((a, c) => a + c) / records.length;
                     $result.textContent = `현재 ${current}ms, 평균: ${average}ms`;
                     // 측정 후 초기화
                     startTime = null;
