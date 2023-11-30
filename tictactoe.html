@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>틱택토</title>
+        <style>
+            
+            table {
+                /* 테이블 셀 테두리 스타일 설정 */
+                border-collapse: collapse;
+            }
+
+            td {
+                border: 1px solid black;
+                width: 40px;
+                height: 40px;
+                /* 글꼴 정렬 위치 */
+                text-align: center;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- 3X3 테이블 -->
+        <table>
+            <!--tr은 표의 가로줄-->
+            <tr>
+                <!-- td는 각 칸을 담당-->
+                <td id="td00"></td>
+                <td id="td01">X</td>
+                <td id="td02"></td>
+            </tr>
+            <tr>
+                <td id="td10">O</td>
+                <td id="td11"></td>
+                <td id="td12">O</td>
+            </tr>
+            <tr>
+                <td id="td20">X</td>
+                <td id="td21">O</td>
+                <td id="td22">X</td>
+            </tr>
+        </table>
+        <script>
+            // 구조분해 할당 문법
+            // 객체 내부의 속성과 변수명이 같을 때 작성
+            const {body} = document;
+            // const body = document.body;
+            // HTML table, div 태그 생성
+            const $table = document.createElement('table');
+            const $result = document.createElement('div');  //결과창
+            const rows = [];
+
+            for (let i = 1; i <= 3; i++) {
+                const $tr = document.createElement('tr');
+                const cells = [];
+                for (let j = 1; j <= 3; i++) {
+                    const $td = document.createElement('td');
+                    cells.push($td);
+                    $tr.appendChild($td);
+                }
+                rows.push(cells);
+                $table.appendChild($tr);
+            }
+            body.appendChild($table);
+            body.appendChild($result);
+        </script>
+    </body>
+</html>
