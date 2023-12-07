@@ -47,7 +47,7 @@
                 if ($screen.classList.contains('waiting')) {  // 대기 화면
                     $screen.classList.remove('waiting');
                     $screen.classList.add('ready');
-                    $screen.textContext = '초록색이 되면 클릭하세요';
+                    $screen.textContent = '초록색이 되면 클릭하세요';
                     timeoutId = setTimeout(function () {
                         startTime = new Date()  // 클릭 시 시간
                         $screen.classList.remove('ready');
@@ -59,7 +59,7 @@
                     clearTimeout(timeoutId)
                     $screen.classList.remove('ready');
                     $screen.classList.add('waiting');
-                    $screen.textContext = '너무 일찍 눌렀어요';
+                    $screen.textContent = '너무 일찍 눌렀어요';
                 } else if ($screen.classList.contains('now')){  // 클릭 화면
                     endTime = new Date();
                     const current = endTime - startTime;  // 반응속도 저장

@@ -18,6 +18,7 @@
         </div>
         <div id="score">0</div>
         <script>
+            // 해당 태그를 선택
             const $computer = document.querySelector('#computer');
             const $score = document.querySelector("#score");
             const $rock = document.querySelector("#rock");
@@ -27,8 +28,8 @@
 
             $computer.style.background = `url(${IMG_URL}) 0 0`;
             $computer.style.backgroundSize = 'auto 200px';
-
-            const rspX = {
+            
+            const rspX = {      // 객체로 변수 묶기
                 scissors: '0',  // 가위
                 rock: '-220px', // 바위
                 paper: '-440px' // 보
