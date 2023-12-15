@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>가위바위보</title>
+        <style>
+            #computer {
+                width: 142px;
+                height: 200px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="computer"></div>
+        <div>
+            <button id="scissors">가위</button>
+            <button id="rock">바위</button>
+            <button id="paper">보</button>
+        </div>
+        <div id="score">0</div>
+        <script>
+            const $computer = document.querySelector('#computer');
+            const $score = document.querySelector('#score');
+            const $rock = document.querySelector('#rock');
+            const $scissors = document.querySelector('#scissors');
+            const $paper = document.querySelector('#paper');
+            const IMG_URL = './rsp.png';
+            $computer.style.background = `url(${IMG_URL}) 0 0`;
+            $computer.style.backgroundSize = 'auto 200px';
+            // y좌표는 모두 0이므로 생략 (x만 표시)
+            const rspX = {
+                scissors: '0',
+                rock: '-220px',
+                paper: '-440px'
+            };
+            
+            // 50밀리초 마다 손을 바꾸기
+            let computerChoice = 'scissors';
+            const changeComputerHand = () => {
+                if (computerChoice === 'rock') {
+                    computerChoice = 'scissors';
+                } else if (computerChoice === 'scissors') {
+                    computerChoice = 'paper';
+                } else if (computerChoice === 'paper') {
+                    computerChoice = 'rock';
+                }
+                $computer.style.background = `url(${IMG_URL}) ${rspX[computerChoice]} 0`;
+                $computer.style.backgroundSize = 'auto 200px'
+            }
+            let intervalId = setInterval(changeComputerHand, 50);
+
+            // 버튼을 눌렀을 때
+            const clickButton = () => {
+                // intervalId를 무력화 (동작 멈춤)
+                clearInterval(intervalId);
+                // 점수 계산 및 화면 표시
+                // 1초 뒤 다시 시작
+                setTimeout(() => {
+                    intervalId = setInterval(changeComputerHand, 50);
+                }, 1000);
+            };
+            // 해당 id의 버튼을 누를때 clickButton 호출
+            $rock.addEventListener('click', clickButton);
+            $scissors.addEventListener('click', clickButton);
+            $paper.addEventListener('click', clickButton);
+        </script>
+    </body>
+</html> 
