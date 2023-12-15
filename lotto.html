@@ -17,45 +17,45 @@
             /* 높이 지정 */
             height: 40px;
             /* 텍스트의 라인 높이 지정 후 텍스트를 수직으로 중앙 정렬 */
-            line-height: 40px;
+            line-height: 36px;
             /* 텍스트의 크기 지정 */
             font-size: 20px;
             /* 텍스트를 가운데로 정렬 */
             text-align: center;
-            /* 오른쪽 마진을 지정 */
+            /* 오른쪽과 얼마나 띄울것인지를 지정 */
             margin-right: 20px;
         }
     </style>
 </head>
 <body>
     <div>로또 추첨기</div>
-    <div id="result">추첨 결과는?</div>
+    <div id="result">추첨 결과는? </div>
     <div id="bonus">보너스: </div>
 <script>
     // 길이 45의 배열에 1~45까지 초기화
     // fill() = 값을 지정하여 초기화 비워두면 undefined
+    // 1~45 숫자 순서대로 배열 채우기
     const candidate = Array(45).fill().map((v, i) => i + 1);
     // 빈 배열 선언
     const shuffle = [];
-    // 45~1로 거꾸로 for문 동작
-    for (let i = candidate.length; i > 0; i--) {
-        // 랜덤한 숫자를 뽑아서
-        const random = Math.floor(Math.random() * i);
-        // 해당 인덱스 번호에 위치한 것을 잘라서
-        const spliceArray = candidate.splice(random, 1);
-        // 할당 시킨후
-        const value = spliceArray[0];
-        // shuffle에 넣는다.
-        shuffle.push(value);
-    }
+    // 숫자 뒤섞기
+    while (candidate.length > 0) {
+            // 1~45 숫자 랜덤 선택
+            const random = Math.floor(Math.random() * candidate.length);
+            // 위에서 랜덤으로 선택한 숫자 뽑기(잘라내서 새로 할당)
+            const spliceArray = candidate.splice(random, 1);
+            // 뽑은 숫자 value에 할당
+            const value = spliceArray[0];
+            // shuffle에 넣기
+            shuffle.push(value);
+        }
     console.log(shuffle);
     // 0~5번 인덱스 즉 6개를 잘라낸 후 sort 메소드로 오름차순으로 정렬
     const winBalls = shuffle.slice(0, 6). sort((a, b) => a - b);
     // 6번 인덱스를 bonus에 전달 (보너스 번호)
     const bonus = shuffle[6];
-    // 6개번호 + 보너스 번호
     console.log(winBalls, bonus);
-
+    // 숫자 구간별 색깔 지정
     function colorize(number, $tag) {
         if (number < 10) {
             $tag.style.backgroundColor = 'red';
@@ -72,29 +72,31 @@
             $tag.style.color = 'white';
         }
     }
+
     const $result = document.querySelector('#result');
 
     function drawBall(number, $parent) {
         // document.createElement는 기존에 없던 태그를 생성하는 메서드
         const $ball = document.createElement('div');
-        // 클래스 이름 지정
+        // ball 이름의 css 선택
         $ball.className = 'ball';
         // 볼 색상 지정
         colorize(number, $ball);
         // 태그의 내용물 지정
         $ball.textContent = number;
+        // 부모를 $ball로 지정
         $parent.appendChild($ball);
     }
-
+    // 6개의 볼 생성
     for (let i = 0; i < winBalls.length; i++) {
         setTimeout(() => {
             drawBall(winBalls[i], $result);
-        }, 1000 * (i + 1));
+        }, 1000 * i);
     }
 
     const $bonus = document.querySelector('#bonus');
     setTimeout(() => {
         drawBall(bonus, $bonus);
-    }, 7000);
+    }, 6000);
 </script>
 </body>

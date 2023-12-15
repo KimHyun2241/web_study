@@ -49,11 +49,11 @@
                 //setTimeout(changeComputerHand, 50);
             }
             // 처음 호출(5초 후 실행됨)
-            //setTimeout(changeComputerHand, 5000);
+            //setTimeout(changeComputerHand, 50);
             // setTimeout 함수를 대체함
             let intervalId = setInterval(changeComputerHand, 50);
 
-            // 가위: 1. 바위:0, 보:-1
+            // 가위: 1, 바위:0, 보:-1
             // 나\컴퓨터  가위  바위  보
             // 가위         0     1   2
             // 바위        -1     0   1
@@ -67,14 +67,19 @@
             let clickable = true;
             let score = 0;
             const clickButton = () => {
+                // true일 때만 동작
                 if (clickable) {
                     clearInterval(intervalId);
                     clickable = false;
                     // 삼항 연산자('? :')
+                    // 바위 이면 rock 아니면
                     const myChoice = event.target.textContent === '바위'
                         ? 'rock'
+                        // 다음 삼항 연산자 실행
+                        // 가위일 경우 scissors
                         : event.target.textContent === '가위'
                             ? 'scissors'
+                            // 가위가 아닐 경우 paper
                             : 'paper';
                     const myScore = scoreTable[myChoice];
                     const computerScore = scoreTable[computerChoice];
